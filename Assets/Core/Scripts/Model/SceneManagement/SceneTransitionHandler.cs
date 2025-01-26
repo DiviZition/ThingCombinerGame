@@ -13,6 +13,8 @@ public class SceneTransitionHandler
     private UiLoadingScreen _loadingProgress;
     private UiScreenVail _screenVail;
 
+    private bool _isSceneLoadingInProcess;
+
     public SceneTransitionHandler(CoroutineHolder coroutineHolder, UiComposition uiComposition, DiContainer container)
     {
         _coroutineHolder = coroutineHolder;
@@ -27,10 +29,18 @@ public class SceneTransitionHandler
 
     public void SwitchScene(SceneTypes sceneType) => SwitchScene(SceneNames.GetSceneName(sceneType));
 
-    public void SwitchScene(string sceneName) => _coroutineHolder.StartCoroutine(LoadNewScene(sceneName));
+    public void SwitchScene(string sceneName)
+    {
+        if (_isSceneLoadingInProcess == false)
+            return;
+
+        _coroutineHolder.StartCoroutine(LoadNewScene(sceneName));
+    }
 
     private IEnumerator LoadNewScene(string sceneName)
     {
+        _isSceneLoadingInProcess = true;
+
         yield return ActivateVeil();
         _screenVail.DeactivateVeil();
         _loadingComposition.gameObject.SetActive(true);
@@ -50,7 +60,7 @@ public class SceneTransitionHandler
         _loadingComposition.gameObject.SetActive(false);
         _screenVail.DeactivateVeil();
 
-        yield return null;
+        _isSceneLoadingInProcess = false;
     }
 
     private IEnumerator ActivateVeil()
