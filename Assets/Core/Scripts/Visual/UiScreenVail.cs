@@ -1,39 +1,22 @@
 using Nenn.InspectorEnhancements.Runtime.Attributes;
-using System;
+using R3;
 using System.Collections;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
 
-public class LoadingScreenComposition : MonoBehaviour
+public class UiScreenVail : MonoBehaviour
 {
-    [field: SerializeField] public Camera LoadingScreenCamera { get; private set; }
-
     [SerializeField] private Image _veil;
     [SerializeField] private float _veilStateChangeSpeed;
 
-    [SerializeField] private Image _progressBar;
-
-    public GameObject GameObject { get; private set; }
-
-    private CoroutineHolder _coroutineHolder;
-
-    [Inject]
-    public void Construct(CoroutineHolder coroutineHolder)
-    {
-        _coroutineHolder = coroutineHolder;
-        GameObject = this.gameObject;
-    }
-
-    public void UpdateProgressBar(float value) => _progressBar.fillAmount = value;
+    public readonly Subject<Unit> OnActivateVeilFinished = new Subject<Unit>();
+    public readonly Subject<Unit> OnDeactivateVeilFinished = new Subject<Unit>();
 
     [MethodButton]
-    public void ShowTheVeil() => _coroutineHolder.StartCoroutine(ShowTheVeilProcess());
+    public void ActivateVeil() => StartCoroutine(ShowTheVeilProcess());
 
     [MethodButton]
-    public void RemoveTheVeil() => _coroutineHolder.StartCoroutine(RemoveTheVeilProcess());
-
+    public void DeactivateVeil() => StartCoroutine(RemoveTheVeilProcess());
 
     private IEnumerator ShowTheVeilProcess()
     {
@@ -47,6 +30,8 @@ public class LoadingScreenComposition : MonoBehaviour
 
             yield return null;
         }
+
+        OnActivateVeilFinished.OnNext(Unit.Default);
     }
 
     private IEnumerator RemoveTheVeilProcess()
@@ -61,5 +46,7 @@ public class LoadingScreenComposition : MonoBehaviour
 
             yield return null;
         }
+
+        OnDeactivateVeilFinished.OnNext(Unit.Default);
     }
 }
