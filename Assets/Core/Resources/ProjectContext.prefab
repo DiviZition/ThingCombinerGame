@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 277588385735133269}
   - component: {fileID: -1274133025705220727}
   - component: {fileID: -7780768441393233150}
-  - component: {fileID: 3808485574143293252}
   m_Layer: 0
   m_Name: ProjectContext
   m_TagString: Untagged
@@ -50,10 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: -7780768441393233150}
   - {fileID: 277588385735133269}
+  - {fileID: -7780768441393233150}
   - {fileID: -1274133025705220727}
-  - {fileID: 3808485574143293252}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0
@@ -104,16 +102,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09235dfd63c58b048946b77082bf5061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3808485574143293252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6569024916991079765}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e25bdbf84a23eb41a83735c29bfaa86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cameraBrainPrefab: {fileID: 1689004951575507969, guid: 17d6be49b861e3744a2d607d3e10e21e, type: 3}

@@ -3,6 +3,7 @@ using R3;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class UiScreenVail : MonoBehaviour
 {
@@ -12,11 +13,19 @@ public class UiScreenVail : MonoBehaviour
     public readonly Subject<Unit> OnActivateVeilFinished = new Subject<Unit>();
     public readonly Subject<Unit> OnDeactivateVeilFinished = new Subject<Unit>();
 
-    [MethodButton]
-    public void ActivateVeil() => StartCoroutine(ShowTheVeilProcess());
+    private CoroutineHolder _coroutineHolder;
+
+    [Inject]
+    public void Construct(CoroutineHolder coroutines)
+    {
+        _coroutineHolder = coroutines;
+    }
 
     [MethodButton]
-    public void DeactivateVeil() => StartCoroutine(RemoveTheVeilProcess());
+    public void ActivateVeil() => _coroutineHolder.StartCoroutine(ShowTheVeilProcess());
+
+    [MethodButton]
+    public void DeactivateVeil() => _coroutineHolder.StartCoroutine(RemoveTheVeilProcess());
 
     private IEnumerator ShowTheVeilProcess()
     {

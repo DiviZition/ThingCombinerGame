@@ -60,7 +60,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 98
   m_TargetDisplay: 0
 --- !u!114 &1421206456303319822
 MonoBehaviour:
@@ -281,7 +281,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 99
   m_TargetDisplay: 0
 --- !u!114 &3191522551679663052
 MonoBehaviour:
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _veil: {fileID: 5050873265325049047}
-  _veilStateChangeSpeed: 2
+  _veilStateChangeSpeed: 0.5
 --- !u!1 &8911997394445160203
 GameObject:
   m_ObjectHideFlags: 0
