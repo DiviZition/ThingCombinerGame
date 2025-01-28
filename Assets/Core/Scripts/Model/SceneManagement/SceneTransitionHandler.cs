@@ -49,8 +49,7 @@ public class SceneTransitionHandler
 
     private IEnumerator LoadNewScene(string sceneName)
     {
-        yield return ActivateVeil();
-
+        yield return WaitUntilVailActivated();
         yield return SceneManager.UnloadSceneAsync(_currentScene, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 
         _screenVail.DeactivateVeil();
@@ -60,7 +59,7 @@ public class SceneTransitionHandler
         _currentScene = sceneName;
         sceneLoadingOperation.allowSceneActivation = false;
         
-        while (sceneLoadingOperation.progress <= ProgressMaxValue)
+        while (sceneLoadingOperation.progress < ProgressMaxValue)
         {
             Debug.Log(sceneLoadingOperation.progress);
 
@@ -69,8 +68,7 @@ public class SceneTransitionHandler
             yield return null;
         }
 
-        yield return new WaitForSeconds(1);
-        yield return ActivateVeil();
+        yield return WaitUntilVailActivated();
 
         sceneLoadingOperation.allowSceneActivation = true;
         _loadingComposition.gameObject.SetActive(false);
@@ -80,7 +78,7 @@ public class SceneTransitionHandler
         _isSceneLoadingInProcess = false;
     }
 
-    private IEnumerator ActivateVeil()
+    private IEnumerator WaitUntilVailActivated()
     {
         bool isVailActivated = false;
         _screenVail.OnActivateVeilFinished.Subscribe(_ => { isVailActivated = true; }).AddTo(_disposable);
