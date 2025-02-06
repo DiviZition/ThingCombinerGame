@@ -23,17 +23,13 @@ public class SceneTransitionHandler
 
         _loadingProgress = uiComposition.LoadingScreen;
         _screenVail = uiComposition.ScreenVail;
-        _screenVail.DeactivateVeil();
-        _loadingProgress.UpdateProgressBar(0);
 
-        _loadingComposition = container.InstantiatePrefabResource("LevelLoadingComposition");
+        _loadingComposition = Object.Instantiate(Resources.Load<GameObject>("LevelLoadingComposition"));
         _loadingComposition.SetActive(false);
-        _loadingComposition.transform.position = Vector3.down * 10;
-        UnityEngine.Object.DontDestroyOnLoad(_loadingComposition);
+        _loadingComposition.transform.position = Vector3.down * 50;
+        Object.DontDestroyOnLoad(_loadingComposition);
 
-        SceneManager.LoadScene(SceneNames.LoadingScene, LoadSceneMode.Single);
-        SceneManager.LoadScene(SceneNames.MainMenu, LoadSceneMode.Additive);
-        _currentScene = SceneNames.MainMenu;
+        _currentScene = SceneManager.GetActiveScene().name;
     }
 
     public void SwitchScene(SceneTypes sceneType) => SwitchScene(SceneNames.GetSceneName(sceneType));
@@ -50,19 +46,17 @@ public class SceneTransitionHandler
     private IEnumerator LoadNewScene(string sceneName)
     {
         yield return WaitUntilVailActivated();
-        yield return SceneManager.UnloadSceneAsync(_currentScene, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
+        yield return SceneManager.LoadSceneAsync(SceneNames.LoadingScene, LoadSceneMode.Single);
 
         _screenVail.DeactivateVeil();
         _loadingComposition.gameObject.SetActive(true);
 
-        AsyncOperation sceneLoadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        AsyncOperation sceneLoadingOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         _currentScene = sceneName;
         sceneLoadingOperation.allowSceneActivation = false;
         
         while (sceneLoadingOperation.progress < ProgressMaxValue)
         {
-            Debug.Log(sceneLoadingOperation.progress);
-
             float progress = sceneLoadingOperation.progress * 100;
             _loadingProgress.UpdateProgressBar(progress);
             yield return null;

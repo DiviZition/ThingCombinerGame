@@ -13,19 +13,16 @@ public class UiScreenVail : MonoBehaviour
     public readonly Subject<Unit> OnActivateVeilFinished = new Subject<Unit>();
     public readonly Subject<Unit> OnDeactivateVeilFinished = new Subject<Unit>();
 
-    private CoroutineHolder _coroutineHolder;
-
-    [Inject]
-    public void Construct(CoroutineHolder coroutines)
+    private void Start()
     {
-        _coroutineHolder = coroutines;
+        DeactivateVeil();
     }
 
     [MethodButton]
-    public void ActivateVeil() => _coroutineHolder.StartCoroutine(ShowTheVeilProcess());
+    public void ActivateVeil() => StartCoroutine(ShowTheVeilProcess());
 
     [MethodButton]
-    public void DeactivateVeil() => _coroutineHolder.StartCoroutine(RemoveTheVeilProcess());
+    public void DeactivateVeil() => StartCoroutine(RemoveTheVeilProcess());
 
     private IEnumerator ShowTheVeilProcess()
     {
