@@ -12,6 +12,9 @@ public class PlayerRunMoveStrategy : IControllable, IDisposable
     private float _fallVelocity;
     private bool _isSprinting;
 
+    public bool IsMoveing {  get; private set; }
+    public bool IsSprinting { get; private set; }
+
     public PlayerRunMoveStrategy(CharacterController controller, MovementSettingsConfig moveConfig, PlayerInputs inputs, Camera camera)
     {
         _controller = controller;
@@ -21,17 +24,18 @@ public class PlayerRunMoveStrategy : IControllable, IDisposable
 
         _inputs.GamePlay.Sprint.started += OnStartSprint;
         _inputs.GamePlay.Sprint.canceled += OnStopSprinting;
-        _inputs.GamePlay.MoveDirection.performed += GetMoveInput;
     }
     public void OnEnter() {  }  
 
-    private void GetMoveInput(InputAction.CallbackContext obj) => obj.ReadValue<Vector2>();
     private void OnStartSprint(InputAction.CallbackContext context) => _isSprinting = true;
     private void OnStopSprinting(InputAction.CallbackContext context) => _isSprinting = false;
 
     public void Perform()
     {
         Vector3 moveDirection = CalculateMoveDirection();
+
+        IsMoveing = moveDirection.sqrMagnitude > 0;
+        IsSprinting = _isSprinting;
 
         moveDirection *= _isSprinting ? _moveConfig.SprintSpeed : _moveConfig.MoveSpeed;
 
@@ -77,6 +81,5 @@ public class PlayerRunMoveStrategy : IControllable, IDisposable
     {
         _inputs.GamePlay.Sprint.started -= OnStartSprint;
         _inputs.GamePlay.Sprint.canceled -= OnStopSprinting;
-        _inputs.GamePlay.MoveDirection.performed -= GetMoveInput;
     }
 }

@@ -16,7 +16,6 @@ public class PlayerComponentsInstaller : MonoInstaller
     {
         Container.Bind<PlayerMovementStrategyHandler>().FromInstance(_playerMovement).AsSingle();
         Container.Bind<PlayerInputs>().FromInstance(CreatePlayerInputs()).AsSingle();
-        Container.Bind<PlayerStateData>().FromNew().AsSingle();
         Container.Bind<StatusData>().FromNew().AsSingle().NonLazy();
     }
 

@@ -1,5 +1,4 @@
 ﻿using R3;
-using System;
 using System.Collections.Generic;
 
 public class StatusData
@@ -36,6 +35,8 @@ public class StatusData
     {
         Fighting,
         Starving,
+        Swimming,
         Diving,
+        Dialoguing,
     }
 }

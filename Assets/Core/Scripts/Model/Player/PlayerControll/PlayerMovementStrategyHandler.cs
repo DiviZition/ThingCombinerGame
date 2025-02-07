@@ -1,6 +1,4 @@
-﻿using R3;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
@@ -9,36 +7,38 @@ public class PlayerMovementStrategyHandler : MonoBehaviour
     [SerializeField] private CharacterController _characterController;
     [SerializeField] private MovementSettingsConfig _moveSettingsConfig;
 
-    private Dictionary<PlayerStateData.StateType, IControllable> _strategies = new(2);
-    private CompositeDisposable _disposable = new CompositeDisposable();
+    private IControllable _defaultMove;
 
-    private IControllable _currentControllStrategy;
+    private bool _isFreezed;
+
+    public IControllable CurrentStrategy { get; private set; }
 
     [Inject]
-    public void Construct(PlayerStateData stateData, PlayerInputs inputs, Camera camera)
+    public void Construct(PlayerInputs inputs, Camera camera)
     {
-        _strategies.Add(PlayerStateData.StateType.Default, 
-            new PlayerRunMoveStrategy(_characterController, _moveSettingsConfig, inputs, camera));
+        _defaultMove = new PlayerRunMoveStrategy(_characterController, _moveSettingsConfig, inputs, camera);
 
-        SwitchStrategy(PlayerStateData.StateType.Default);
-
-        stateData.OnStateChange.Subscribe(stateType => SwitchStrategy(stateType)).AddTo(_disposable);
+        SwitchStrategy(_defaultMove);
     }
 
     private void FixedUpdate()
     {
-        _currentControllStrategy.Perform();
+        if (_isFreezed == false)
+            CurrentStrategy.Perform();
     }
 
-    private void SwitchStrategy(PlayerStateData.StateType correspondingState)
-    {
-        if ( _currentControllStrategy != _strategies[correspondingState])
-        {
-            if (_currentControllStrategy != null)
-                _currentControllStrategy.OnExit();
+    public void Freeze() => _isFreezed = true;
+    public void UnFreeze() => _isFreezed = false;
 
-            _currentControllStrategy = _strategies[correspondingState];
-            _currentControllStrategy.OnEnter();
+    private void SwitchStrategy(IControllable newState)
+    {
+        if (CurrentStrategy != newState)
+        {
+            if (CurrentStrategy != null)
+                CurrentStrategy.OnExit();
+
+            CurrentStrategy = newState;
+            CurrentStrategy.OnEnter();
         }
     }
 }
