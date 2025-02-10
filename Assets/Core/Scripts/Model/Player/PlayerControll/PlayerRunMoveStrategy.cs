@@ -53,7 +53,7 @@ public class PlayerRunMoveStrategy : IControllable
             return;
 
         Quaternion lookDirection = Quaternion.LookRotation(moveDirection);
-        _transform.rotation = Quaternion.RotateTowards(_transform.rotation, lookDirection, _moveConfig.LookRotationSpeed);
+        _transform.rotation = Quaternion.RotateTowards(_transform.rotation, lookDirection, _moveConfig.LookRotationSpeed * Time.deltaTime);
     }
 
     public float DefineGravity()

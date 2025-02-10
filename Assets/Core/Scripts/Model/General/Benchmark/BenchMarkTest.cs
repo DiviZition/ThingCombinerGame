@@ -6,13 +6,13 @@ public class BenchMarkTest : MonoBehaviour
     public Vector3 _moveDirection;
     public Vector2 _directionToParse;
     
-    private PlayerInputs _inputs;
+    private DefaultInputs _inputs;
 
     public void PerformTestAction()//Empty action is 38 ms
     {
         if (_inputs == null)
         {
-            _inputs = _inputs = new PlayerInputs();
+            _inputs = _inputs = new DefaultInputs();
             _inputs.GamePlay.MoveDirection.performed += PerformedSubscriptionTest;
         }
     }

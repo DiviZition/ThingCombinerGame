@@ -8,9 +8,9 @@ public class PlayerMoveInput : IMoveInput, IDisposable
     public sbyte MoveDirectionY => GetVerticalMoveDirection();
     public bool IsSprinting {  get; private set; }
 
-    private PlayerInputs _inputs;
+    private DefaultInputs _inputs;
 
-    public PlayerMoveInput(PlayerInputs inputs)
+    public PlayerMoveInput(DefaultInputs inputs)
     {
         _inputs = inputs;
 

@@ -4,9 +4,9 @@ public class PlayerInputsInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        PlayerInputs inputs = new PlayerInputs();
+        DefaultInputs inputs = new DefaultInputs();
         inputs.Enable();
 
-        Container.Bind<PlayerInputs>().FromInstance(inputs).AsSingle();
+        Container.Bind<DefaultInputs>().FromInstance(inputs).AsSingle();
     }
 }
