@@ -14,7 +14,7 @@ public class PlayerMovementStrategyHandler : MonoBehaviour
     public IControllable CurrentStrategy { get; private set; }
 
     [Inject]
-    public void Construct(PlayerInputs inputs, Camera camera)
+    public void Construct(PlayerMoveInput inputs, Camera camera)
     {
         _defaultMove = new PlayerRunMoveStrategy(_characterController, _moveSettingsConfig, inputs, camera);
 

@@ -46,7 +46,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwimUp"",
+                    ""name"": ""MoveUp"",
                     ""type"": ""Button"",
                     ""id"": ""e6e11a2d-50f1-4311-8978-2e0382388191"",
                     ""expectedControlType"": """",
@@ -55,7 +55,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""SwimDown"",
+                    ""name"": ""MoveDown"",
                     ""type"": ""Button"",
                     ""id"": ""e2082d5c-a1b5-46a3-89df-aac0d249a13f"",
                     ""expectedControlType"": """",
@@ -193,7 +193,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwimUp"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -204,7 +204,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""SwimDown"",
+                    ""action"": ""MoveDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -301,8 +301,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_GamePlay = asset.FindActionMap("GamePlay", throwIfNotFound: true);
         m_GamePlay_MoveDirection = m_GamePlay.FindAction("MoveDirection", throwIfNotFound: true);
         m_GamePlay_Sprint = m_GamePlay.FindAction("Sprint", throwIfNotFound: true);
-        m_GamePlay_SwimUp = m_GamePlay.FindAction("SwimUp", throwIfNotFound: true);
-        m_GamePlay_SwimDown = m_GamePlay.FindAction("SwimDown", throwIfNotFound: true);
+        m_GamePlay_MoveUp = m_GamePlay.FindAction("MoveUp", throwIfNotFound: true);
+        m_GamePlay_MoveDown = m_GamePlay.FindAction("MoveDown", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Newaction = m_UI.FindAction("New action", throwIfNotFound: true);
@@ -383,16 +383,16 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private List<IGamePlayActions> m_GamePlayActionsCallbackInterfaces = new List<IGamePlayActions>();
     private readonly InputAction m_GamePlay_MoveDirection;
     private readonly InputAction m_GamePlay_Sprint;
-    private readonly InputAction m_GamePlay_SwimUp;
-    private readonly InputAction m_GamePlay_SwimDown;
+    private readonly InputAction m_GamePlay_MoveUp;
+    private readonly InputAction m_GamePlay_MoveDown;
     public struct GamePlayActions
     {
         private @PlayerInputs m_Wrapper;
         public GamePlayActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @MoveDirection => m_Wrapper.m_GamePlay_MoveDirection;
         public InputAction @Sprint => m_Wrapper.m_GamePlay_Sprint;
-        public InputAction @SwimUp => m_Wrapper.m_GamePlay_SwimUp;
-        public InputAction @SwimDown => m_Wrapper.m_GamePlay_SwimDown;
+        public InputAction @MoveUp => m_Wrapper.m_GamePlay_MoveUp;
+        public InputAction @MoveDown => m_Wrapper.m_GamePlay_MoveDown;
         public InputActionMap Get() { return m_Wrapper.m_GamePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -408,12 +408,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Sprint.started += instance.OnSprint;
             @Sprint.performed += instance.OnSprint;
             @Sprint.canceled += instance.OnSprint;
-            @SwimUp.started += instance.OnSwimUp;
-            @SwimUp.performed += instance.OnSwimUp;
-            @SwimUp.canceled += instance.OnSwimUp;
-            @SwimDown.started += instance.OnSwimDown;
-            @SwimDown.performed += instance.OnSwimDown;
-            @SwimDown.canceled += instance.OnSwimDown;
+            @MoveUp.started += instance.OnMoveUp;
+            @MoveUp.performed += instance.OnMoveUp;
+            @MoveUp.canceled += instance.OnMoveUp;
+            @MoveDown.started += instance.OnMoveDown;
+            @MoveDown.performed += instance.OnMoveDown;
+            @MoveDown.canceled += instance.OnMoveDown;
         }
 
         private void UnregisterCallbacks(IGamePlayActions instance)
@@ -424,12 +424,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Sprint.started -= instance.OnSprint;
             @Sprint.performed -= instance.OnSprint;
             @Sprint.canceled -= instance.OnSprint;
-            @SwimUp.started -= instance.OnSwimUp;
-            @SwimUp.performed -= instance.OnSwimUp;
-            @SwimUp.canceled -= instance.OnSwimUp;
-            @SwimDown.started -= instance.OnSwimDown;
-            @SwimDown.performed -= instance.OnSwimDown;
-            @SwimDown.canceled -= instance.OnSwimDown;
+            @MoveUp.started -= instance.OnMoveUp;
+            @MoveUp.performed -= instance.OnMoveUp;
+            @MoveUp.canceled -= instance.OnMoveUp;
+            @MoveDown.started -= instance.OnMoveDown;
+            @MoveDown.performed -= instance.OnMoveDown;
+            @MoveDown.canceled -= instance.OnMoveDown;
         }
 
         public void RemoveCallbacks(IGamePlayActions instance)
@@ -589,8 +589,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     {
         void OnMoveDirection(InputAction.CallbackContext context);
         void OnSprint(InputAction.CallbackContext context);
-        void OnSwimUp(InputAction.CallbackContext context);
-        void OnSwimDown(InputAction.CallbackContext context);
+        void OnMoveUp(InputAction.CallbackContext context);
+        void OnMoveDown(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

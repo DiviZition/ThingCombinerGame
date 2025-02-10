@@ -5,6 +5,10 @@ using GeneralSolutions;
 public class PlayerComponentsInstaller : MonoInstaller
 {
     [SerializeField] private PlayerMovementStrategyHandler _playerMovement;
+    [SerializeField] private Animator _animator;
+
+    [SerializeField] private MovementSettingsConfig _moveConfig;
+    [SerializeField] private AnimationsConfig _animatiosConfig;
 
     private void OnValidate()
     {
@@ -15,15 +19,25 @@ public class PlayerComponentsInstaller : MonoInstaller
     public override void InstallBindings()
     {
         Container.Bind<PlayerMovementStrategyHandler>().FromInstance(_playerMovement).AsSingle();
-        Container.Bind<PlayerInputs>().FromInstance(CreatePlayerInputs()).AsSingle();
+        Container.Bind<Animator>().FromInstance(_animator).AsSingle();
+
+        Container.Bind<MovementSettingsConfig>().FromInstance(_moveConfig).AsSingle();
+        Container.Bind<AnimationsConfig>().FromInstance(_animatiosConfig).AsSingle();
+
+        BindInputs(Container);
+
         Container.Bind<StatusData>().FromNew().AsSingle().NonLazy();
+        Container.Bind<AnimationSwitcher>().FromNew().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerAnimationController>().FromNew().AsSingle().NonLazy();
     }
 
-    private PlayerInputs CreatePlayerInputs()
+    private void BindInputs(DiContainer container)
     {
         PlayerInputs inputs = new PlayerInputs();
         inputs.Enable();
 
-        return inputs;
+        Container.Bind<PlayerInputs>().FromInstance(inputs).AsSingle();
+        //Need to define what input should we use
+        container.BindInterfacesAndSelfTo<PlayerMoveInput>().FromNew().AsSingle().NonLazy();
     }
 }

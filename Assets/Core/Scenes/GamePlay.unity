@@ -2164,12 +2164,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2031853764163648466}
+  - component: {fileID: 5946581360579597973}
   - component: {fileID: 5946581360579597977}
   - component: {fileID: 5946581360579597976}
   - component: {fileID: 5946581360579597975}
-  - component: {fileID: 5946581360579597973}
   - component: {fileID: 5946581360579597974}
-  - component: {fileID: 5946581360579597979}
   m_Layer: 8
   m_Name: RobotKyle
   m_TagString: Player
@@ -2306,6 +2305,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerMovement: {fileID: 5946581360579597974}
+  _animator: {fileID: 1983799794}
+  _moveConfig: {fileID: 11400000, guid: 5c6ab15b967573a4cb513d37e295a449, type: 2}
+  _animatiosConfig: {fileID: 11400000, guid: 0494a1e3bd99e074085d93d6d2efef4e, type: 2}
 --- !u!114 &5946581360579597976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2336,49 +2338,6 @@ MonoBehaviour:
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 5946581360579597976}
---- !u!114 &5946581360579597979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800584549646148940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0933bdbbfe56fb46bcef571df60abf8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _animator: {fileID: 1983799794}
-  _animations:
-  - <AnimationName>k__BackingField: StandIdle
-    <AnimationType>k__BackingField: 0
-    <TransitionDuration>k__BackingField: 0.25
-  - <AnimationName>k__BackingField: Walk
-    <AnimationType>k__BackingField: 2
-    <TransitionDuration>k__BackingField: 0.25
-  - <AnimationName>k__BackingField: Run
-    <AnimationType>k__BackingField: 3
-    <TransitionDuration>k__BackingField: 0.25
-  _animationOverride:
-  - <OverrideKey>k__BackingField: 1
-    <Animations>k__BackingField:
-    - <AnimationName>k__BackingField: SwimIdle
-      <AnimationType>k__BackingField: 0
-      <TransitionDuration>k__BackingField: 0.25
-    - <AnimationName>k__BackingField: SwimForward
-      <AnimationType>k__BackingField: 2
-      <TransitionDuration>k__BackingField: 0.25
-  - <OverrideKey>k__BackingField: 0
-    <Animations>k__BackingField:
-    - <AnimationName>k__BackingField: StandIdle
-      <AnimationType>k__BackingField: 0
-      <TransitionDuration>k__BackingField: 0.25
-    - <AnimationName>k__BackingField: Walk
-      <AnimationType>k__BackingField: 2
-      <TransitionDuration>k__BackingField: 0.25
-    - <AnimationName>k__BackingField: Run
-      <AnimationType>k__BackingField: 3
-      <TransitionDuration>k__BackingField: 0.25
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

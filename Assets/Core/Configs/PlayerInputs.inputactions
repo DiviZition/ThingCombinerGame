@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwimUp",
+                    "name": "MoveUp",
                     "type": "Button",
                     "id": "e6e11a2d-50f1-4311-8978-2e0382388191",
                     "expectedControlType": "",
@@ -33,7 +33,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwimDown",
+                    "name": "MoveDown",
                     "type": "Button",
                     "id": "e2082d5c-a1b5-46a3-89df-aac0d249a13f",
                     "expectedControlType": "",
@@ -171,7 +171,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwimUp",
+                    "action": "MoveUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -182,7 +182,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwimDown",
+                    "action": "MoveDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

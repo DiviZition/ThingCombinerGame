@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlayerMovementConfig
   m_EditorClassIdentifier: 
   <MoveSpeed>k__BackingField: 2
+  <LookRotationSpeed>k__BackingField: 5
   <SprintSpeed>k__BackingField: 6
   <MaxFallSpeed>k__BackingField: 50
   <GroundedGravity>k__BackingField: 2

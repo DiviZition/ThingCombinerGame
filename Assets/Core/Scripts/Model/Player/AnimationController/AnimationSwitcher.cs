@@ -1,24 +1,26 @@
 using UnityEngine;
 
-public class AnimationSwitcher : MonoBehaviour
+public class AnimationSwitcher
 {
-    [SerializeField] private Animator _animator;
-    [SerializeField] private AnimationData[] _animations;
-    [SerializeField] private AnimationOverride[] _animationOverride;
+    private Animator _animator;
+    private AnimationsConfig _config;
 
-    private void Start()
+    public AnimationSwitcher(Animator animator, AnimationsConfig config)
     {
+        _animator = animator;
+        _config = config;
+
         InitializeAnimationHashes();
     }
 
     private void InitializeAnimationHashes()
     {
-        for (int i = 0; i < _animations.Length; i++)
-            _animations[i].Initialize();
+        for (int i = 0; i < _config.Animations.Length; i++)
+            _config.Animations[i].Initialize();
 
-        for (int i = 0; i < _animationOverride.Length; i++)
-            for (int b = 0; b < _animationOverride[i].Animations.Length; b++)
-                _animationOverride[i].Animations[b].Initialize();
+        for (int i = 0; i < _config.Overrides.Length; i++)
+            for (int b = 0; b < _config.Overrides[i].Animations.Length; b++)
+                _config.Overrides[i].Animations[b].Initialize();
     }
 
     public void StartAnimation(AnimationType animationType)
@@ -33,10 +35,10 @@ public class AnimationSwitcher : MonoBehaviour
     public void OverrideAnimations(AnimationOverride.KeyType overrideKey)
     {
         AnimationOverride newAnimations = null;
-        for (int i = 0; i < _animationOverride.Length; i++)
+        for (int i = 0; i < _config.Overrides.Length; i++)
         {
-            if (_animationOverride[i].OverrideKey == overrideKey)
-                newAnimations = _animationOverride[i];
+            if (_config.Overrides[i].OverrideKey == overrideKey)
+                newAnimations = _config.Overrides[i];
         }
 
         if (newAnimations == null)
@@ -45,15 +47,15 @@ public class AnimationSwitcher : MonoBehaviour
         for (int i = 0; i < newAnimations.Animations.Length; i++)
         {
             AnimationData newAnimData = newAnimations.Animations[i];
-            _animations[GetAnimationIndex(newAnimData.AnimationType)] = newAnimData;
+            _config.Animations[GetAnimationIndex(newAnimData.AnimationType)] = newAnimData;
         }
     }
 
     private int GetAnimationIndex(AnimationType animationType)
     {
-        for (int i = 0; i < _animations.Length; i++)
+        for (int i = 0; i < _config.Animations.Length; i++)
         {
-            if (_animations[i].AnimationType == animationType)
+            if (_config.Animations[i].AnimationType == animationType)
                 return i;
         }
 
@@ -64,7 +66,7 @@ public class AnimationSwitcher : MonoBehaviour
     {
         int index = GetAnimationIndex(animationType);
 
-        return index < 0 ? null : _animations[index];
+        return index < 0 ? null : _config.Animations[index];
     }
 
     public enum AnimationType : sbyte

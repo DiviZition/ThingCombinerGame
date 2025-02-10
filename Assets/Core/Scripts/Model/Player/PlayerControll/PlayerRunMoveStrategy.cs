@@ -1,44 +1,36 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.InputSystem;
+﻿using UnityEngine;
 
-public class PlayerRunMoveStrategy : IControllable, IDisposable
+public class PlayerRunMoveStrategy : IControllable
 {
     private CharacterController _controller;
+    private Transform _transform;
     private MovementSettingsConfig _moveConfig;
-    private PlayerInputs _inputs;
+    private IMoveInput _inputs;
     private Camera _camera;
+    private Transform _cameraTransform;
 
     private float _fallVelocity;
-    private bool _isSprinting;
 
-    public bool IsMoveing {  get; private set; }
-    public bool IsSprinting { get; private set; }
+    public bool IsMoveing => _inputs.MoveDirectionXZ != Vector3.zero;
+    public bool IsSprinting => _inputs.IsSprinting;
 
-    public PlayerRunMoveStrategy(CharacterController controller, MovementSettingsConfig moveConfig, PlayerInputs inputs, Camera camera)
+    public PlayerRunMoveStrategy(CharacterController controller, MovementSettingsConfig moveConfig, PlayerMoveInput inputs, Camera camera)
     {
         _controller = controller;
         _moveConfig = moveConfig;
         _inputs = inputs;
         _camera = camera;
 
-        _inputs.GamePlay.Sprint.started += OnStartSprint;
-        _inputs.GamePlay.Sprint.canceled += OnStopSprinting;
+        _transform = _controller.transform;
+        _cameraTransform = _camera.transform;
     }
-    public void OnEnter() {  }  
-
-    private void OnStartSprint(InputAction.CallbackContext context) => _isSprinting = true;
-    private void OnStopSprinting(InputAction.CallbackContext context) => _isSprinting = false;
 
     public void Perform()
     {
         Vector3 moveDirection = CalculateMoveDirection();
+        moveDirection *= IsSprinting ? _moveConfig.SprintSpeed : _moveConfig.MoveSpeed;
 
-        IsMoveing = moveDirection.sqrMagnitude > 0;
-        IsSprinting = _isSprinting;
-
-        moveDirection *= _isSprinting ? _moveConfig.SprintSpeed : _moveConfig.MoveSpeed;
-
+        MakeCharacterLookForward(moveDirection);
         moveDirection.y = DefineGravity();
 
         _controller.Move(moveDirection * Time.fixedDeltaTime);
@@ -46,13 +38,22 @@ public class PlayerRunMoveStrategy : IControllable, IDisposable
 
     private Vector3 CalculateMoveDirection()
     {
-        Vector2 inputs = _inputs.GamePlay.MoveDirection.ReadValue<Vector2>();
-
-        Vector3 moveDirection = _camera.transform.forward * inputs.y + _camera.transform.right * inputs.x;
+        Vector3 moveDirection = Vector3.zero;
+        moveDirection += _cameraTransform.right * _inputs.MoveDirectionXZ.x;
+        moveDirection += _cameraTransform.forward * _inputs.MoveDirectionXZ.z;
         moveDirection.y = 0;
         moveDirection.Normalize();
 
         return moveDirection;
+    }
+
+    private void MakeCharacterLookForward(Vector3 moveDirection)
+    {
+        if (IsMoveing == false)
+            return;
+
+        Quaternion lookDirection = Quaternion.LookRotation(moveDirection);
+        _transform.rotation = Quaternion.RotateTowards(_transform.rotation, lookDirection, _moveConfig.LookRotationSpeed);
     }
 
     public float DefineGravity()
@@ -73,13 +74,6 @@ public class PlayerRunMoveStrategy : IControllable, IDisposable
         return _fallVelocity;
     }
 
-    public void OnExit()
-    {
-    }
-
-    public void Dispose()
-    {
-        _inputs.GamePlay.Sprint.started -= OnStartSprint;
-        _inputs.GamePlay.Sprint.canceled -= OnStopSprinting;
-    }
+    public void OnEnter() { }
+    public void OnExit() { }
 }
