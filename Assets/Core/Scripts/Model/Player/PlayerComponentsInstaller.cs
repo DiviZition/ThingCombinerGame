@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 using GeneralSolutions;
+using System;
 
 public class PlayerComponentsInstaller : MonoInstaller
 {
@@ -39,5 +40,9 @@ public class PlayerComponentsInstaller : MonoInstaller
         Container.Bind<DefaultInputs>().FromInstance(inputs).AsSingle();
         //Need to define what input should we use
         container.BindInterfacesAndSelfTo<PlayerMoveInput>().FromNew().AsSingle().NonLazy();
+    }
+
+    private void BindAbilities(DiContainer container)
+    {
     }
 }
