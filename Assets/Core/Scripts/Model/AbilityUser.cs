@@ -15,11 +15,11 @@ public class AbilityUser : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            _abilitySystem.UseAbility(AbilityData.AbilityType.MeleeAttack);
+            _abilitySystem.UseAbility(AbilityDataInstaller.AbilityType.MeleeAttack);
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
-            _abilitySystem.UseAbility(AbilityData.AbilityType.ShieldBlock);
+            _abilitySystem.UseAbility(AbilityDataInstaller.AbilityType.ShieldBlock);
         }
     }
 }

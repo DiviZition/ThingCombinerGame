@@ -1544,7 +1544,7 @@ GameObject:
   - component: {fileID: 5946581360579597976}
   - component: {fileID: 5946581360579597975}
   - component: {fileID: 5946581360579597974}
-  - component: {fileID: 5946581360579597978}
+  - component: {fileID: 5946581360579597980}
   - component: {fileID: 5946581360579597979}
   m_Layer: 8
   m_Name: RobotKyle
@@ -1712,25 +1712,10 @@ MonoBehaviour:
   _scriptableObjectInstallers: []
   _monoInstallers:
   - {fileID: 5946581360579597975}
-  - {fileID: 5946581360579597978}
+  - {fileID: 5946581360579597980}
   _installerPrefabs: []
   _autoRun: 1
   _kernel: {fileID: 5946581360579597976}
---- !u!114 &5946581360579597978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2800584549646148940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c01c5a1c56e60245977472a7010a70c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _abilityConfigs:
-  - {fileID: 11400000, guid: 5ccfd3ba10e27b347a51cbc53d87c1f2, type: 2}
-  - {fileID: 11400000, guid: 64de4f8ead7ae7d429d92302747b79d3, type: 2}
 --- !u!114 &5946581360579597979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1743,6 +1728,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2bcd1c32a14ad24ba8b6877782fcb45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5946581360579597980
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2800584549646148940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 922f57b62d2e75a4ea7c2594e4a79c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _abilityConfigs:
+  - {fileID: 11400000, guid: 5ccfd3ba10e27b347a51cbc53d87c1f2, type: 2}
+  - {fileID: 11400000, guid: 64de4f8ead7ae7d429d92302747b79d3, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

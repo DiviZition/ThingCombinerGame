@@ -2,13 +2,13 @@
 using UnityEngine;
 using Zenject;
 
-[CreateAssetMenu(fileName = "MeleeAttackConfig", menuName = "ScriptableObjects/Ability/MeleeAttack")]
-public class AbilityMeleeAttack : ScriptableAbilityBase
+[CreateAssetMenu(fileName = "ShieldBlockConfig", menuName = "ScriptableObjects/Ability/ShieldBlock")]
+public class AbilityShieldBlock : ScriptableAbilityBase
 {
     [field: SerializeField] public float CoolDown { get; private set; }
     [field: SerializeField] public int AttackRange { get; private set; }
 
-    public override AbilityDataInstaller.AbilityType Type => AbilityDataInstaller.AbilityType.MeleeAttack;
+    public override AbilityDataInstaller.AbilityType Type => AbilityDataInstaller.AbilityType.ShieldBlock;
 
     [Inject]
     public void Construct()
@@ -19,6 +19,6 @@ public class AbilityMeleeAttack : ScriptableAbilityBase
     protected override IEnumerator AbilityLogic()
     {
         yield return new WaitForSeconds(CoolDown);
-        Debug.Log("Melee attack logick performed");
+        Debug.Log("Shield block logick performed");
     }
 }
